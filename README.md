@@ -1,7 +1,7 @@
 # timed-rotating-text-file
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![PyPI license](https://img.shields.io/pypi/l/TimedRotatingTextFile.svg)](https://pypi.python.org/pypi/TimedRotatingTextFile/) [![PyPI version shields.io](https://img.shields.io/pypi/v/TimedRotatingTextFile.svg)](https://pypi.python.org/pypi/TimedRotatingTextFile/) [![PyPI pyversions](https://img.shields.io/pypi/pyversions/TimedRotatingTextFile.svg)](https://pypi.python.org/pypi/TimedRotatingTextFile/) 
-[![GitHub release](https://img.shields.io/github/release/bahamut45/TimedRotatingTextFile.svg)](https://GitHub.com/bahamut45/TimedRotatingTextFile/releases/)
+[![GitHub release](https://img.shields.io/github/release/bahamut45/timed-rotating-text-file.svg)](https://GitHub.com/bahamut45/timed-rotating-text-file/releases/)
 
 A ZERO dependency rotating text file handler which rotates when YOU want it to, like TimedRotatingFileHandler provided by Python's logging module.
 
@@ -13,7 +13,7 @@ A ZERO dependency rotating text file handler which rotates when YOU want it to, 
 
 
 ### Installation
-`pip install TimedRotatingTextFile`
+`pip install timed_rotating_text_file`
 
 ### Usage
 
