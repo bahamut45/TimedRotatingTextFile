@@ -52,7 +52,7 @@ You can use the **when** to specify the type of **interval**. The list of possib
 | 'D'        | Days                  |
 | 'MIDNIGHT' | Roll over at midnight |
 
-The system will save old files by appending extensions to the filename. The extensions are date-and-time based, using the strftime format %Y-%m-%d_%H-%M-%S or a leading portion thereof, depending on the rollover interval.
+The system will save old files by appending extensions to the filename. The extensions are date-and-time based, using the strftime format `%Y-%m-%d_%H-%M-%S` or a leading portion thereof, depending on the rollover interval.
 
 When computing the next rollover time for the first time (when the handler is created), the last modification time of an existing file, or else the current time, is used to compute when the next rotation will occur.
 
@@ -64,3 +64,6 @@ If **delay** is true, then file opening is deferred until the first call
 
 > Calculation of the initial rollover time is done when the handler is initialised. Calculation of subsequent rollover times is done only when rollover occurs, and rollover occurs only when emitting output. If this is not kept in mind, it might lead to some confusion. For example, if an interval of “every minute” is set, that does not mean you will always see files with times (in the filename) separated by a minute; if, during application execution, output is generated more frequently than once a minute, then you can expect to see files with times separated by a minute. If, on the other hand, messages are only output once every five minutes (say), then there will be gaps in the file times corresponding to the minutes where no output (and hence no rollover) occurred.
 
+Inspired by :
+- https://docs.python.org/3/library/logging.handlers.html#timedrotatingfilehandler
+- https://github.com/Rahul-RB/RotatingTextFile
