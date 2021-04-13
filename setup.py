@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="TimedRotatingTextFile",
+    name="timed_rotating_text_file",
     version="0.0.3",
     description="A ZERO dependency rotating text file handler which rotates when YOU want it to, like TimedRotatingFileHandler provided by Python's logging module.",
     long_description=long_description,
@@ -23,7 +23,7 @@ setuptools.setup(
     keywords='custom rotating file handler textfile logger',
     author='bahamut45',
     author_email='njoubert45@gmail.com',
-    url='https://github.com/bahamut45/TimedRotatingTextFile',
+    url='https://github.com/bahamut45/timed-rotating-text-file',
     packages=setuptools.find_packages(exclude=['examples', 'tests']),
     include_package_data=True,
     zip_safe=False,
