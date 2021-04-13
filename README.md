@@ -13,7 +13,7 @@ A ZERO dependency rotating text file handler which rotates when YOU want it to, 
 
 
 ### Installation
-`pip install timed_rotating_text_file`
+`pip install timed-rotating-text-file`
 
 ### Usage
 
