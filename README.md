@@ -1,4 +1,4 @@
-# TimedRotatingTextFile
+# timed-rotating-text-file
 
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![PyPI license](https://img.shields.io/pypi/l/TimedRotatingTextFile.svg)](https://pypi.python.org/pypi/TimedRotatingTextFile/) [![PyPI version shields.io](https://img.shields.io/pypi/v/TimedRotatingTextFile.svg)](https://pypi.python.org/pypi/TimedRotatingTextFile/) [![PyPI pyversions](https://img.shields.io/pypi/pyversions/TimedRotatingTextFile.svg)](https://pypi.python.org/pypi/TimedRotatingTextFile/) 
 [![GitHub release](https://img.shields.io/github/release/bahamut45/TimedRotatingTextFile.svg)](https://GitHub.com/bahamut45/TimedRotatingTextFile/releases/)
@@ -24,6 +24,7 @@ with open("path/to/text/file","w") as fp:
 ```
 All you have to do is:
 ```python
+from timed_rotating_text_file import TimedRotatingTextFile
 with TimedRotatingTextFile("/tmp/tmp.log", when="m", backup_count=5) as fp:
   fp.write("some log")
 ``` 
@@ -43,9 +44,9 @@ Result:
 
 ### Arguments
 
-`class TimedRotatingTextFiler(filename, when='d', interval=1, backup_count=0, mode="ab+", delay=False, utc=False)`
+`class TimedRotatingTextFile(filename, when='d', interval=1, backup_count=0, mode="ab+", delay=False, utc=False)`
 
-Returns a new instance of the `TimedRotatingFileHandler` class. The specified file is opened and used as the stream for file. On rotating it also sets the filename suffix. Rotating happens based on the product of **when** and **interval**.
+Returns a new instance of the `TimedRotatingTextFile` class. The specified file is opened and used as the stream for file. On rotating it also sets the filename suffix. Rotating happens based on the product of **when** and **interval**.
 
 You can use the **when** to specify the type of **interval**. The list of possible values is below. Note that they are not case sensitive.
 
