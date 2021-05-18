@@ -12,26 +12,25 @@ class TimedRotatingTextFile(TextIOWrapper):
     """ Rotating the text file at certain timed intervals. """
 
     def __init__(
-        self,
-        filename,
-        when="d",
-        interval=1,
-        backup_count=0,
-        mode="ab+",
-        delay=False,
-        utc=False,
-        **kwargs
+            self,
+            filename,
+            when="d",
+            interval=1,
+            backup_count=0,
+            mode="ab+",
+            delay=False,
+            utc=False,
+            **kwargs,
     ):
-        self.file = open(filename, mode)
         self.filename = filename
         self.when = when.upper()
-
         self.backup_count = backup_count
         self.mode = mode
         self.delay = delay
         self.utc = utc
+        self.file = open(filename, mode)
 
-        super().__init__(self.file, **kwargs)
+        TextIOWrapper.__init__(self, self.file, **kwargs)
 
         if self.when in ["D", "MIDNIGHT"]:
             self.interval = 60 * 60 * 24  # One day
@@ -45,6 +44,10 @@ class TimedRotatingTextFile(TextIOWrapper):
             self.interval = 60  # one minute
             self.suffix = "%Y-%m-%d_%H-%M"
             self.regex_match = r"^\d{4}-\d{2}-\d{2}_\d{2}-\d{2}(\.\w+)?$"
+        elif self.when == 'S':
+            self.interval = 1  # one second
+            self.suffix = "%Y-%m-%d_%H-%M-%S"
+            self.regex_match = r"^\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}(\.\w+)?$"
         else:
             raise ValueError("Invalid rollover interval specified: %s" % self.when)
 
@@ -107,11 +110,11 @@ class TimedRotatingTextFile(TextIOWrapper):
         return result[: len(result) - self.backup_count]
 
     def do_rollover(self):
-        """ do a rollover; in this case, a date/time stamp is appended to the filename
+        """do a rollover; in this case, a date/time stamp is appended to the filename
         when the rollover happens.  However, you want the file to be named for the
         start of the interval, not the current time.  If there is a backup count,
         then we have to get a list of matching filenames, sort them and remove
-        the one with the oldest suffix. """
+        the one with the oldest suffix."""
         current_time = int((time.time()))
         dst_now = time.localtime(current_time)[-1]
         timed = self.rollover_at - self.interval
@@ -132,7 +135,8 @@ class TimedRotatingTextFile(TextIOWrapper):
             for file_path in self.get_files_to_delete():
                 os.remove(file_path)
         if not self.delay:
-            open(self.base_file_name, self.mode)
+            self.file.close()
+            self.file = open(self.base_file_name, self.mode)
         new_rollover_at = self.compute_rollover(current_time)
         while new_rollover_at <= current_time:
             new_rollover_at = new_rollover_at + self.interval
@@ -146,10 +150,10 @@ class TimedRotatingTextFile(TextIOWrapper):
     def write(self, line):
         if self.should_rollover():
             self.do_rollover()
-        return super().write(line)
+
+        self.file.write(line.encode())
 
     def close(self):
-        super().close()
         self.file.close()
 
 
@@ -157,8 +161,5 @@ class TimedRotatingTextFile(TextIOWrapper):
 # MAIN SECTION #
 ################
 if __name__ == "__main__":
-    i = 0
-    with TimedRotatingTextFile("/tmp/tmp.log", when="MIDNIGHT", backup_count=5) as filepath:
-        while i < 120:
-            filepath.write(str(datetime.now().microsecond) + "\n")
-            i += 1
+    with TimedRotatingTextFile("/tmp/tmp.log", when="M", backup_count=5) as filepath:
+        filepath.write(f"Report Generated on {datetime.now().strftime('%A %d %B %Y %H:%M:%S')}")
