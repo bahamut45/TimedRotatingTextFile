@@ -5,8 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="timed_rotating_text_file",
-    version="0.0.4",
-    description="A ZERO dependency rotating text file handler which rotates when YOU want it to, like TimedRotatingFileHandler provided by Python's logging module.",
+    version="0.0.5",
+    description="A ZERO dependency rotating text file handler which rotates when YOU want it to, "
+                "like TimedRotatingFileHandler provided by Python's logging module.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
