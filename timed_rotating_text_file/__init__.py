@@ -28,7 +28,7 @@ class TimedRotatingTextFile(TextIOWrapper):
         self.mode = mode
         self.delay = delay
         self.utc = utc
-        self.file = open(filename, mode)
+        self.file = open(filename, self.mode)
 
         TextIOWrapper.__init__(self, self.file, **kwargs)
 
@@ -135,8 +135,9 @@ class TimedRotatingTextFile(TextIOWrapper):
             for file_path in self.get_files_to_delete():
                 os.remove(file_path)
         if not self.delay:
-            self.file.close()
+            self.close()
             self.file = open(self.base_file_name, self.mode)
+            TextIOWrapper.__init__(self, self.file)
         new_rollover_at = self.compute_rollover(current_time)
         while new_rollover_at <= current_time:
             new_rollover_at = new_rollover_at + self.interval
@@ -152,9 +153,11 @@ class TimedRotatingTextFile(TextIOWrapper):
             self.do_rollover()
 
         self.file.write(line.encode())
+        super().write(line)
 
     def close(self):
         self.file.close()
+        super().close()
 
 
 ################
