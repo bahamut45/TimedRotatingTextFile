@@ -153,7 +153,7 @@ class TimedRotatingTextFile(TextIOWrapper):
             self.do_rollover()
 
         self.file.write(line.encode())
-        super().write(line)
+        # super().write(line)
 
     def close(self):
         self.file.close()
@@ -164,5 +164,7 @@ class TimedRotatingTextFile(TextIOWrapper):
 # MAIN SECTION #
 ################
 if __name__ == "__main__":
-    with TimedRotatingTextFile("/tmp/tmp.log", when="M", backup_count=5) as filepath:
-        filepath.write(f"Report Generated on {datetime.now().strftime('%A %d %B %Y %H:%M:%S')}")
+    with TimedRotatingTextFile("/tmp/tmp.log", when="MIDNIGHT", backup_count=5) as filepath:
+        filepath.write(f"Report Generated on {datetime.now().strftime('%A %d %B %Y %H:%M:%S')}\n")
+        time.sleep(5)
+        filepath.write("Another line\n")
